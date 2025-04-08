@@ -1,16 +1,16 @@
-from openai import OpenAI
+import openai
 from pinecone import Pinecone
 from typing import List, Tuple
 import os
 from dotenv import load_dotenv
 load_dotenv() # Load environment variables
-OPENAI_API_KEY= os.getenv('OPENAI_API_KEY')
+openai.api_key= os.getenv('OPENAI_API_KEY')
 PINECONE_API_KEY= os.getenv('PINECONE_API_KEY')
 INDEX_NAME= os.getenv('INDEX_NAME')
 NAMESPACE= os.getenv('NAMESPACE')
 
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+# client = OpenAI(api_key=OPENAI_API_KEY)
 pc = Pinecone(api_key=PINECONE_API_KEY)
 index = pc.Index(INDEX_NAME)
 
@@ -24,7 +24,7 @@ def rephrase_query(query: str, chat_history: str = "") -> str:
         "Only rephrase the current query, but use the previous query to resolve coreferences or ambiguity."
     )
 
-    response = client.chat.completions.create(
+    response = openai.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": "You are a helpful assistant that rewrites academic queries."},
@@ -38,7 +38,7 @@ def rephrase_query(query: str, chat_history: str = "") -> str:
 
 
 def generate_embedding(text: str) -> List[float]:
-    return client.embeddings.create(
+    return openai.embeddings.create(
         input=text, model="text-embedding-3-small"
     ).data[0].embedding
 
@@ -103,7 +103,7 @@ def generate_embeddings(texts: List[str]) -> List[List[float]]:
     embeddings = []
     try:
         for text in texts:
-            response = client.embeddings.create(
+            response = openai.embeddings.create(
                 input=text, model="text-embedding-3-small"
             ).data[0].embedding
             embedding = response
@@ -137,7 +137,7 @@ def final_response_from_selection(user_query: str, rephrased_query: str, selecte
         Please provide a detailed, concise, structured academic response based on the context above.
         """
 
-        response = client.chat.completions.create(
+        response = openai.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": "You are a helpful academic advisor."},

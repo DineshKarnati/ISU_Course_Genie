@@ -1,10 +1,13 @@
+# api_utils_graph.py
 import json
-from openai import OpenAI
+
+import openai
 from neo4j import GraphDatabase
 from dotenv import load_dotenv
 import os
-load_dotenv() # Load environment variables
-OPENAI_API_KEY= os.getenv('OPENAI_API_KEY')
+load_dotenv() 
+# Load environment variables
+openai.api_key= os.getenv('OPENAI_API_KEY')
 PINECONE_API_KEY= os.getenv('PINECONE_API_KEY')
 INDEX_NAME= os.getenv('INDEX_NAME')
 NAMESPACE= os.getenv('NAMESPACE')
@@ -12,8 +15,9 @@ NAMESPACE= os.getenv('NAMESPACE')
 NEO_URI= os.getenv('NEO_URI')
 NEO_USERNAME= os.getenv('NEO_USERNAME')
 NEO4J_PASSWORD= os.getenv('NEO4J_PASSWORD')
+print(f"NEO_URI: {NEO_URI}")  # should not be empty or None
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+# client = OpenAI(api_key=OPENAI_API_KEY)
 neo4j_driver = GraphDatabase.driver(NEO_URI,
                                     auth=(NEO_USERNAME, NEO4J_PASSWORD))
 
@@ -28,7 +32,7 @@ def rephrase_query(query: str, previous_query: str = "") -> str:
         prompt += f"Previous Rephrased Query: {previous_query}\n\n"
     prompt += f"Current Query: {query}"
 
-    response = client.chat.completions.create(
+    response = openai.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": "You are a helpful assistant that refines queries."},
@@ -45,7 +49,7 @@ def extract_entities_and_intent(query: str) -> dict:
     Intent must be one of: list_program_courses, course_details, semester_plan, program_overview.
     Return as JSON: {"intent": "...", "program": "...", "coursecode": "...", "coursename": "...","year": "..."} (some fields may be null)"""
 
-    response = client.chat.completions.create(
+    response = openai.chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},
@@ -238,7 +242,7 @@ def generate_response_from_context(rephrased_query: str, context: str) -> str:
         "respond in a helpful and concise way using the graph-based context."
     )
 
-    response = client.chat.completions.create(
+    response = openai.chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},
