@@ -1,1 +1,0 @@
-# ISU Course Genie
