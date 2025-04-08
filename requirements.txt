@@ -1,0 +1,14 @@
+beautifulsoup4==4.13.3
+fastapi==0.115.9
+requests==2.26.0
+jsonschema==4.23.0
+numpy==2.0.2
+openai==1.59.7
+pandas==2.2.3
+rapidfuzz==3.11.0
+selenium==4.28.1
+streamlit
+tqdm==4.67.1
+uvicorn==0.34.0
+pinecone
+neo4j

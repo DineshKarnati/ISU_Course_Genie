@@ -1,0 +1,72 @@
+body, .stApp {
+    background-color: #F8F9FA;
+    margin: 0;
+    padding-bottom: 60px;  /* Make space for footer */
+}
+
+.header-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+.header-block img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.header-block h1 {
+    font-size: 2.7rem;
+    font-weight: bold;
+    color: #16325c;
+    margin: 0;
+}
+
+.SubHeading-block h4 {
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #16325c;
+    margin: 0;
+}
+.header-block .subtitle {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #16325c;
+    margin-top: 0.5rem;
+}
+.stChatMessageContent, .stMarkdown, .stMarkdown p {
+    color: #111 !important;
+}
+
+section[data-testid="stSidebar"] {
+    background-color: #16325c !important;
+    color: white !important;
+}
+
+section[data-testid="stSidebar"] * {
+    color: white !important;
+}
+
+section[data-testid="stSidebar"] .stSelectbox label,
+section[data-testid="stSidebar"] .stFileUploader label {
+    color: white !important;
+    font-weight: 600;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #16325c;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    z-index: 100;
+}
